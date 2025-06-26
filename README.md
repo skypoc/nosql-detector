@@ -45,3 +45,86 @@ pip install -r requirements.txt
 # Make the script executable
 chmod +x nosql-detector.py
 
+```
+
+## Usage
+
+```bash
+python nosql-detector.py https://target.com
+
+# Scan with custom configuration
+python nosql-detector.py https://target.com -c config.yaml
+
+# Test specific endpoints
+python nosql-detector.py https://target.com -e /api/login /api/search
+
+# Verbose output
+python nosql-detector.py https://target.com -v
+
+# Custom output file
+python nosql-detector.py https://target.com -o results.json
+
+# Adjust timeout and threads
+python nosql-detector.py https://target.com --timeout 60 --threads 20
+
+```
+
+## Configuration
+```yaml
+# Request settings
+timeout: 30
+max_concurrent_requests: 10
+delay_between_requests: 0.5
+
+# Detection methods
+detection_methods:
+  boolean_based: true
+  time_based: true
+  error_based: true
+  javascript: true
+
+# Custom payloads
+payloads:
+  custom:
+    - {"$where": "this.password.length > 5"}
+    - {"$regex": "^admin.*"}
+```
+## Output Example
+```json
+{
+  "scan_info": {
+    "start_time": "2024-01-20T10:30:00",
+    "duration": "45.23 seconds",
+    "total_requests": 156,
+    "requests_per_second": 3.45
+  },
+  "summary": {
+    "total_vulnerabilities": 3,
+    "high_confidence_vulnerabilities": 2,
+    "vulnerable_endpoints": 2,
+    "injection_types_found": ["auth_bypass", "boolean_based"]
+  },
+  "vulnerabilities": [
+    {
+      "endpoint": "https://target.com/api/login",
+      "parameter": "username",
+      "type": "auth_bypass",
+      "confidence": 0.9,
+      "payload": {"$ne": null},
+      "evidence": "Authentication bypass successful"
+    }
+  ]
+}
+```
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Author
+Made with ❤️ by skypoc
+
+## Disclaimer
+This tool is for educational and authorized testing purposes only. Users are responsible for complying with all applicable laws and regulations. The author assumes no liability for misuse of this tool.
+
+
+
+
