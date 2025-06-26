@@ -1,0 +1,46 @@
+# NoSQL Detector Configuration File
+# Customize detection behavior and payloads
+
+# Request settings
+timeout: 30
+max_concurrent_requests: 10
+delay_between_requests: 0.5
+follow_redirects: false
+verify_ssl: false
+
+# User agent for requests
+user_agent: "NoSQL-Detector/1.0 (Security Scanner)"
+
+# Detection methods to use
+detection_methods:
+  boolean_based: true
+  time_based: true
+  error_based: true
+  javascript: true
+
+# Evasion techniques
+evasion_techniques:
+  randomize_user_agent: true
+  add_delay_variance: true
+  use_encoding: true
+
+# Payload sets
+payloads:
+  basic: true
+  advanced: true
+  custom:
+    # Add your custom payloads here
+    - {"$where": "this.password.length > 5"}
+    - {"$regex": "^admin.*"}
+
+# Custom endpoints to test (optional)
+custom_endpoints:
+  - "/api/v2/auth"
+  - "/api/v2/search"
+  - "/graphql"
+
+# Logging settings
+logging:
+  level: INFO
+  file: true
+  console: true
